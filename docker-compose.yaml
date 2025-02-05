@@ -1,0 +1,36 @@
+services:
+  smartsms-web:
+    image: ghcr.io/vernu/smartsms/web:latest
+    container_name: smartsms-web
+    build: 
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file: 
+      - path: ./web/.env
+        required: true
+    command: pnpm start
+  smartsms-api:
+    image: ghcr.io/vernu/smartsms/api:latest
+    container_name: smartsms-api
+    build: 
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "3005:3005"
+    env_file: 
+      - path: ./api/.env
+        required: true
+    depends_on:
+      - smartsms-db
+  smartsms-db:
+    image: mongo
+    container_name: smartsms-db
+    volumes:
+      - smartsms-db-data:/data/db
+    ports:
+      - "27017:27017"
+
+volumes:
+  smartsms-db-data:
