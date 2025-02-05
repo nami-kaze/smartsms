@@ -258,6 +258,6 @@ export default function ContributePage() {
     //     </Card>
     //   </div>
     // </div>
-    <h4>under construction</h4>
+    <></>
   );
 }
