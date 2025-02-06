@@ -35,19 +35,36 @@ export class GatewayService {
     input: RegisterDeviceInputDTO,
     user: User,
   ): Promise<any> {
-    const device = await this.deviceModel.findOne({
-      user: user._id,
-      model: input.model,
-      buildId: input.buildId,
-    })
+    try {
+      console.log('Registration attempt:', { input, userId: user._id });
+      
+      const device = await this.deviceModel.findOne({
+        user: user._id,
+        model: input.model,
+        buildId: input.buildId,
+      });
 
-    if (device) {
-      return await this.updateDevice(device._id.toString(), {
-        ...input,
-        enabled: true,
-      })
-    } else {
-      return await this.deviceModel.create({ ...input, user })
+      if (device) {
+        console.log('Updating existing device:', device._id);
+        return await this.updateDevice(device._id.toString(), {
+          ...input,
+          enabled: true,
+        });
+      } else {
+        console.log('Creating new device for user:', user._id);
+        const newDevice = await this.deviceModel.create({ ...input, user });
+        console.log('Device created:', newDevice._id);
+        return newDevice;
+      }
+    } catch (error) {
+      console.error('Device registration failed:', error);
+      throw new HttpException(
+        {
+          error: 'Failed to register device',
+          details: error.message
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
     }
   }
 
