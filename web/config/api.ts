@@ -21,14 +21,14 @@ export const ApiEndpoints = {
     deleteApiKey: (id: string) => `/api/v1/auth/api-keys/${id}`,
   },
   gateway: {
-    listDevices: () => '/gateway/devices',
-    sendSMS: (id: string) => `/gateway/devices/${id}/send-sms`,
-    sendBulkSMS: (id: string) => `/gateway/devices/${id}/send-bulk-sms`,
-    getReceivedSMS: (id: string) => `/gateway/devices/${id}/get-received-sms`,
+    listDevices: () => '/api/v1/gateway/devices',
+    sendSMS: (id: string) => `/api/v1/gateway/devices/${id}/send-sms`,
+    sendBulkSMS: (id: string) => `/api/v1/gateway/devices/${id}/send-bulk-sms`,
+    getReceivedSMS: (id: string) => `/api/v1/gateway/devices/${id}/get-received-sms`,
 
-    getWebhooks: () => '/webhooks',
-    createWebhook: () => '/webhooks',
-    updateWebhook: (id: string) => `/webhooks/${id}`,
-    getStats: () => '/gateway/stats',
+    getWebhooks: () => '/api/v1/webhooks',
+    createWebhook: () => '/api/v1/webhooks',
+    updateWebhook: (id: string) => `/api/v1/webhooks/${id}`,
+    getStats: () => '/api/v1/gateway/stats',
   },
 }
